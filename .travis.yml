@@ -29,7 +29,7 @@ matrix:
       - env: TOXENV=mypy
       - env: TOXENV=vulture
 install:
-  - sh -c 'if [ "$TOXENV" = "py" ]; then pip install tox codecov; else pip install tox; fi'
+  - sh -c 'if [ "$TOXENV" = "py" ]; then pip install tox codecov coverage; else pip install tox; fi'
 script:
   - tox
 after_success:
