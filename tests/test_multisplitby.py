@@ -5,7 +5,7 @@
 import unittest
 from typing import Iterable
 
-from multigroupby import multi_split_by, split_by
+from multisplitby import multi_split_by, split_by
 
 
 def _consume(iterable: Iterable):
@@ -31,10 +31,10 @@ def predicate_3(x: int) -> bool:
 
 
 class TestIter(unittest.TestCase):
-    """Test multisplitby."""
+    """Test :mod:`multisplitby`."""
 
     def test_split_by(self):
-        """Test the split_by function."""
+        """Test the :func:`multisplitby.split_by` function."""
         my_iterable = [1, 2, 3, 4, 5, 6, 7]
 
         a, b = split_by(my_iterable, predicate_1)
@@ -49,7 +49,7 @@ class TestIter(unittest.TestCase):
         self.assertEqual([3, 4, 5, 6, 7], b)
 
     def test_split_by_two(self):
-        """Test the multi_split_by function with two predicates."""
+        """Test the :func:`multisplitby.multi_split_by` function with two predicates."""
         integers = [1, 2, 3, 4, 5, 6, 7]
 
         # expected = [[1, 2], [3, 4, 5], [6, 7]]
@@ -69,7 +69,7 @@ class TestIter(unittest.TestCase):
         self.assertEqual([6, 7], c)
 
     def test_split_by_three(self):
-        """Test the multi_split_by function with three predicates."""
+        """Test the :func:`multisplitby.multi_split_by` function with three predicates."""
         integers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         # expected = [[1, 2], [3, 4, 5], [6, 7], [8, 9, 10]]
 
