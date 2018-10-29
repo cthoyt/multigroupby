@@ -35,19 +35,17 @@ def split_by(iterable: Iterable[F], predicate: F_predicate) -> Tuple[Iterable[F]
     return generator_1(), generator_2()
 
 
-def multi_split_by(iterable: Iterable[F], predicates: List[F_predicate]) -> Iterable[Iterable[F]]:
+def multi_split_by(iterable: Iterable[F], predicates: Iterable[F_predicate]) -> Iterable[Iterable[F]]:
     """Split the iterator after the predicate becomes true, then repeat for every remaining iterable."""
-    iterable = iter(iterable)
-
-    if len(predicates) < 2:
-        raise Exception('we hate u')
-
+    predicates = iter(predicates)
+    predicate = next(predicates)
+    iterable = iter(iterable) 
     last_value = None
 
     def generator_first():
         nonlocal last_value
         for x in iterable:
-            if predicates[0](x):
+            if predicate(x):
                 last_value = x
                 return
             yield x
@@ -63,7 +61,7 @@ def multi_split_by(iterable: Iterable[F], predicates: List[F_predicate]) -> Iter
                 return
             yield x
 
-    for predicate in predicates[1:]:
+    for predicate in predicates:
         yield generator_i(predicate)
 
     def generator_last():
