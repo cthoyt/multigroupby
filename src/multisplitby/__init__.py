@@ -2,7 +2,7 @@
 
 """Split an iterable into multiple using arbitrary predicates."""
 
-from typing import Callable, Iterable, List, Tuple, TypeVar
+from typing import Callable, Iterable, Tuple, TypeVar
 
 __all__ = [
     'split_by',
@@ -39,7 +39,7 @@ def multi_split_by(iterable: Iterable[F], predicates: Iterable[F_predicate]) -> 
     """Split the iterator after the predicate becomes true, then repeat for every remaining iterable."""
     predicates = iter(predicates)
     predicate = next(predicates)
-    iterable = iter(iterable) 
+    iterable = iter(iterable)
     last_value = None
 
     def generator_first():
