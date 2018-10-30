@@ -2,21 +2,25 @@
 
 """Split an iterable into multiple using arbitrary predicates."""
 
-from typing import Callable, Iterable, Tuple, TypeVar
+from typing import Callable, Iterable, Tuple, TypeVar, Union
 
 __all__ = [
     'split_by',
     'multi_split_by',
 ]
 
-F = TypeVar('F')
 
-_LAST_OBJECT_SENTINEL = object()
+class _Sentinel:
+    pass
+
+
+F = TypeVar('F')
+MaybeF = Union[F, _Sentinel]
 
 
 def split_by(values: Iterable[F], predicate: Callable[[F], bool]) -> Tuple[Iterable[F], Iterable[F]]:
     """Split the iterator after the predicate becomes true."""
-    last_value = _LAST_OBJECT_SENTINEL
+    last_value: MaybeF = _Sentinel()
     values = iter(values)
 
     def generator_first() -> Iterable[F]:
@@ -31,7 +35,7 @@ def split_by(values: Iterable[F], predicate: Callable[[F], bool]) -> Tuple[Itera
 
     def generator_last() -> Iterable[F]:
         """Yield the final value from before and the remaining values."""
-        if last_value is not _LAST_OBJECT_SENTINEL:
+        if not isinstance(last_value, _Sentinel):
             yield last_value
 
         yield from values
@@ -50,14 +54,14 @@ def multi_split_by(values: Iterable[F], predicates: Iterable[Callable[[F], bool]
     >>> [list(sub_values) for sub_values in multi_split_by(values, [])]
     >>> [[1, 2, 3, 4]]
     """
-    last_value = _LAST_OBJECT_SENTINEL
+    last_value: MaybeF = _Sentinel()
     values = iter(values)
 
     def generator(p: Callable[[F], bool]) -> Iterable[F]:
         """Yield values until the given predicate is met, keeping the last value saved each time."""
         nonlocal last_value
 
-        if last_value is not _LAST_OBJECT_SENTINEL:
+        if not isinstance(last_value, _Sentinel):
             yield last_value
 
         for value in values:
@@ -67,12 +71,11 @@ def multi_split_by(values: Iterable[F], predicates: Iterable[Callable[[F], bool]
 
             yield value
 
-    for predicate in predicates:
-        yield generator(predicate)
+    yield from map(generator, predicates)
 
     def generator_last() -> Iterable[F]:
         """Yield the remaining value on which the last predicate stopped, then the remainder of the iterable."""
-        if last_value is not _LAST_OBJECT_SENTINEL:
+        if not isinstance(last_value, _LAST_OBJECT_SENTINEL):
             yield last_value
 
         yield from values
