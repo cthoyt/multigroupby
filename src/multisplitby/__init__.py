@@ -73,6 +73,11 @@ def multi_split_by(values: Iterable[F], predicates: Iterable[Callable[[F], bool]
     >>> predicates = []
     >>> list(map(list, multi_split_by(values, predicates)))
     [[0, 1, 2, 3]]
+
+    For all lists ``values`` and ``predicates``, the following conditions are always true:
+
+    1. ``1 + len(predicates) = len(list(multi_split_by(values, predicates)))``
+    2. ``values == itertools.chain.from_iterable(multi_split_by(values, predicates))``
     """
     last_value: MaybeF = _Sentinel()
     values = iter(values)
