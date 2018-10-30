@@ -5,7 +5,7 @@
 import unittest
 from typing import Iterable
 
-from multisplitby import multi_split_by, split_by
+from multisplitby import multi_split_by
 
 
 def _consume(iterable: Iterable):
@@ -32,21 +32,6 @@ def predicate_3(x: int) -> bool:
 
 class TestIter(unittest.TestCase):
     """Test :mod:`multisplitby`."""
-
-    def test_split_by(self):
-        """Test the :func:`multisplitby.split_by` function."""
-        my_iterable = [1, 2, 3, 4, 5, 6, 7]
-
-        a, b = split_by(my_iterable, predicate_1)
-
-        self.assertIsNotNone(a)
-        self.assertIsNotNone(b)
-
-        a = _consume(a)
-        b = _consume(b)
-
-        self.assertEqual([1, 2], a)
-        self.assertEqual([3, 4, 5, 6, 7], b)
 
     def test_split_by_iterable_is_empty(self):
         """Test when an empty iterable is given."""
