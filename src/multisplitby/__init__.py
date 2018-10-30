@@ -75,7 +75,7 @@ def multi_split_by(values: Iterable[F], predicates: Iterable[Callable[[F], bool]
 
     def generator_last() -> Iterable[F]:
         """Yield the remaining value on which the last predicate stopped, then the remainder of the iterable."""
-        if not isinstance(last_value, _LAST_OBJECT_SENTINEL):
+        if not isinstance(last_value, _Sentinel):
             yield last_value
 
         yield from values
