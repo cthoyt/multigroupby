@@ -10,10 +10,9 @@ __all__ = [
 ]
 
 F = TypeVar('F')
-F_predicate = Callable[[F], bool]
 
 
-def split_by(iterable: Iterable[F], predicate: F_predicate) -> Tuple[Iterable[F], Iterable[F]]:
+def split_by(iterable: Iterable[F], predicate: Callable[[F], bool]) -> Tuple[Iterable[F], Iterable[F]]:
     """Split the iterator after the predicate becomes true."""
     iterable = iter(iterable)
 
@@ -35,37 +34,37 @@ def split_by(iterable: Iterable[F], predicate: F_predicate) -> Tuple[Iterable[F]
     return generator_1(), generator_2()
 
 
-def multi_split_by(iterable: Iterable[F], predicates: Iterable[F_predicate]) -> Iterable[Iterable[F]]:
+def multi_split_by(values: Iterable[F], predicates: Iterable[Callable[[F], bool]]) -> Iterable[Iterable[F]]:
     """Split the iterator after the predicate becomes true, then repeat for every remaining iterable."""
     predicates = iter(predicates)
-    iterable = iter(iterable)
+    values = iter(values)
     last_value = None
 
     def generator_first(p):
         nonlocal last_value
-        for x in iterable:
-            if p(x):
-                last_value = x
+        for value in values:
+            if p(value):
+                last_value = value
                 return
-            yield x
+            yield value
 
     predicate = next(predicates)
     yield generator_first(predicate)
 
-    def generator(p):
+    def generator_middle(p):
         nonlocal last_value
         yield last_value
-        for x in iterable:
-            if p(x):
-                last_value = x
+        for value in values:
+            if p(value):
+                last_value = value
                 return
-            yield x
+            yield value
 
     for predicate in predicates:
-        yield generator(predicate)
+        yield generator_middle(predicate)
 
     def generator_last():
         yield last_value
-        yield from iterable
+        yield from values
 
     yield generator_last()
