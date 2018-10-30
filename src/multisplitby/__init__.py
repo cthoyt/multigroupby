@@ -20,7 +20,7 @@ def split_by(values: Iterable[F], predicate: Callable[[F], bool]) -> Tuple[Itera
     values = iter(values)
 
     def generator_first() -> Iterable[F]:
-        """Yields values until the predicate is satisfied, and saves the final value."""
+        """Yield values until the predicate is satisfied, and saves the final value."""
         nonlocal last_value
 
         for value in values:
