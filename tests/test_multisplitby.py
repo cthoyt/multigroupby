@@ -48,21 +48,57 @@ class TestIter(unittest.TestCase):
         self.assertEqual([1, 2], a)
         self.assertEqual([3, 4, 5, 6, 7], b)
 
-    def test_split_by_two(self):
-        """Test the :func:`multisplitby.multi_split_by` function with two predicates."""
-        integers = [1, 2, 3, 4, 5, 6, 7]
+    def test_split_by_iterable_is_empty(self):
+        """Test when an empty iterable is given."""
+        integers = []
+        predicates = [predicate_1, predicate_2]
 
-        # expected = [[1, 2], [3, 4, 5], [6, 7]]
+        r = list(multi_split_by(integers, predicates))
+        self.assertEqual(1 + len(predicates), len(r))
 
-        a, b, c = multi_split_by(integers, [predicate_1, predicate_2])
-
+        a, b, c = r
         self.assertIsNotNone(a)
         self.assertIsNotNone(b)
         self.assertIsNotNone(c)
 
-        a = list(_consume(a))
-        b = list(_consume(b))
-        c = list(_consume(c))
+        a = _consume(a)
+        b = _consume(b)
+        c = _consume(c)
+
+        self.assertEqual([], a)
+        self.assertEqual([], b)
+        self.assertEqual([], c)
+
+    def test_split_by_predicates_is_empty(self):
+        """Test when empty predicates are given."""
+        integers = [1, 2, 3, 4]
+        predicates = []
+
+        r = tuple(multi_split_by(integers, predicates))
+        self.assertEqual(1 + len(predicates), len(r))
+
+        a, = r
+        self.assertIsNotNone(a)
+        a = _consume(a)
+        self.assertEqual([1, 2, 3, 4], a)
+
+    def test_split_by_two(self):
+        """Test the :func:`multisplitby.multi_split_by` function with two predicates."""
+        integers = [1, 2, 3, 4, 5, 6, 7]
+        predicates = [predicate_1, predicate_2]
+        # expected = [[1, 2], [3, 4, 5], [6, 7]]
+
+        r = tuple(multi_split_by(integers, predicates))
+        self.assertEqual(1 + len(predicates), len(r))
+
+        a, b, c = r
+        self.assertIsNotNone(a)
+        self.assertIsNotNone(b)
+        self.assertIsNotNone(c)
+
+        a = _consume(a)
+        b = _consume(b)
+        c = _consume(c)
 
         self.assertEqual([1, 2], a)
         self.assertEqual([3, 4, 5], b)
@@ -71,19 +107,22 @@ class TestIter(unittest.TestCase):
     def test_split_by_three(self):
         """Test the :func:`multisplitby.multi_split_by` function with three predicates."""
         integers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        predicates = [predicate_1, predicate_2, predicate_3]
         # expected = [[1, 2], [3, 4, 5], [6, 7], [8, 9, 10]]
 
-        a, b, c, d = multi_split_by(integers, [predicate_1, predicate_2, predicate_3])
+        r = tuple(multi_split_by(integers, predicates))
+        self.assertEqual(1 + len(predicates), len(r))
 
+        a, b, c, d = r
         self.assertIsNotNone(a)
         self.assertIsNotNone(b)
         self.assertIsNotNone(c)
         self.assertIsNotNone(d)
 
-        a = list(_consume(a))
-        b = list(_consume(b))
-        c = list(_consume(c))
-        d = list(_consume(d))
+        a = _consume(a)
+        b = _consume(b)
+        c = _consume(c)
+        d = _consume(d)
 
         self.assertEqual([1, 2], a)
         self.assertEqual([3, 4, 5], b)
