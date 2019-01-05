@@ -15,7 +15,6 @@ jobs:
     - env: TOXENV=flake8
     - env: TOXENV=pyroma
     - env: TOXENV=xenon
-    - env: TOXENV=vulture
     - env: TOXENV=mypy
     # docs stage
     - stage: docs
@@ -28,7 +27,6 @@ jobs:
 matrix:
   allow_failures:
       - env: TOXENV=mypy
-      - env: TOXENV=vulture
 install:
   - sh -c 'if [ "$TOXENV" = "py" ]; then pip install tox codecov coverage; else pip install tox; fi'
 script:
