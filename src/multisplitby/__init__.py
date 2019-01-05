@@ -52,7 +52,7 @@ def multi_split_by(values: Iterable[F], predicates: Iterable[Callable[[F], bool]
     >>> list(map(list, multi_split_by(values, predicates)))
     [[0, 1, 2, 3]]
     """
-    last_value: MaybeF = _Sentinel()
+    last_value = _Sentinel()  # type: MaybeF
     values = iter(values)
 
     def generator(p: Callable[[F], bool]) -> Iterable[F]:
