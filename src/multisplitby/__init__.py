@@ -5,8 +5,11 @@
 from typing import Callable, Iterable, TypeVar, Union
 
 __all__ = [
+    'VERSION',
     'multi_split_by',
 ]
+
+VERSION = '0.0.1-dev'
 
 
 class _Sentinel:
