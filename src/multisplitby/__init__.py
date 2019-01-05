@@ -9,7 +9,7 @@ __all__ = [
     'multi_split_by',
 ]
 
-VERSION = '0.0.1-dev'
+VERSION = '0.0.1'
 
 
 class _Sentinel:
