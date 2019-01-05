@@ -1,5 +1,5 @@
-multisplitby |build| |coverage|
-===============================
+multisplitby |build| |coverage| |zenodo|
+========================================
 Split an iterable into multiple using arbitrary predicates.
 
 This package comes with a single function: ``multisplitby.multi_split_by``.
@@ -45,9 +45,9 @@ If no predicates are given, will result in a single generator that yields the or
    >>> list(map(list, multi_split_by(values, predicates)))
    [[0, 1, 2, 3]]
 
-Installation
-------------
-Install from PyPI with:
+Installation |pypi_version| |python_versions| |pypi_license|
+------------------------------------------------------------
+Install from `PyPI <https://pypi.python.org/pypi/multisplitby>`_ with:
 
 .. code-block:: bash
 
@@ -66,3 +66,15 @@ or get the latest code from `GitHub <https://github.com/cthoyt/multisplitby>`_ w
 
 .. |coverage| image:: https://codecov.io/gh/cthoyt/multisplitby/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/cthoyt/multisplitby
+
+.. |python_versions| image:: https://img.shields.io/pypi/pyversions/multisplitby.svg
+    :alt: Stable Supported Python Versions
+
+.. |pypi_version| image:: https://img.shields.io/pypi/v/multisplitby.svg
+    :alt: Current version on PyPI
+
+.. |pypi_license| image:: https://img.shields.io/pypi/l/multisplitby.svg
+    :alt: Apache 2.0 License
+
+.. |zenodo| image:: https://zenodo.org/badge/155096674.svg
+   :target: https://zenodo.org/badge/latestdoi/155096674
