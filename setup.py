@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Setup module for Bio2BEL miRBase."""
+"""Setup module."""
 
 from setuptools import setup
 
